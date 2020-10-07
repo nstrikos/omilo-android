@@ -18,17 +18,18 @@ Item {
             }
             onEntered: {
                 console.log("initial state")
+                window.setInitialState()
             }
         }
         DSM.State {
             id: connectedState
             DSM.SignalTransition {
                 targetState: initialState
-                //signal: window.init
+                signal: window.disconnected
             }
             onEntered: {
                 console.log("connected state")
-                //window.showError(functionController.getError())
+                window.setConnectedState()
             }
         }
     }
