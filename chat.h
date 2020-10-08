@@ -10,6 +10,8 @@ class Chat : public QObject
 
 public:
     Chat();
+    Q_INVOKABLE QString getNickName();
+    Q_INVOKABLE QString getCurrentClient();
 
 signals:
     void connected();
@@ -24,6 +26,7 @@ private slots:
 
 private:
     Client client;
+    QString currentClient;
 };
 
 #endif // CHAT_H

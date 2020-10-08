@@ -11,6 +11,16 @@ Chat::Chat()
     connect(&client, SIGNAL(disconnectedFromPeer()), this, SLOT(disconnectedFromPeer()));
 }
 
+QString Chat::getNickName()
+{
+    return client.nickName();
+}
+
+QString Chat::getCurrentClient()
+{
+    return currentClient;
+}
+
 void Chat::appendMessage(const QString &from, const QString &message)
 {
     qDebug() << "Message: " << message << " from: " << from;
@@ -19,6 +29,7 @@ void Chat::appendMessage(const QString &from, const QString &message)
 void Chat::newParticipant(const QString &nick)
 {
     qDebug() << nick << " joined";
+    currentClient = nick;
 }
 
 void Chat::participantLeft(const QString &nick)

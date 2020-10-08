@@ -27,9 +27,28 @@ Item {
                 targetState: initialState
                 signal: window.disconnected
             }
+            DSM.SignalTransition {
+                targetState: showInfoState
+                signal: window.showInfo
+            }
             onEntered: {
                 console.log("connected state")
                 window.setConnectedState()
+            }
+        }
+        DSM.State {
+            id: showInfoState
+            DSM.SignalTransition {
+                targetState: connectedState
+                signal: window.hideInfo
+            }
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: window.disconnected
+            }
+            onEntered: {
+                console.log("showinfo state")
+                window.setShowInfoState()
             }
         }
     }

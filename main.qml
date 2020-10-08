@@ -12,6 +12,8 @@ Window {
 
     signal connected()
     signal disconnected()
+    signal showInfo()
+    signal hideInfo()
 
     States {
     }
@@ -37,11 +39,48 @@ Window {
         anchors.fill: parent
     }
 
+    Text {
+        id: text
+        anchors.fill: parent
+        font.family: "Helvetica"
+        font.pointSize: 24
+        color: "green"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.WordWrap
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onPressed: {
+            showInfo()
+            console.log("mousearea pressed")
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: 10000
+        onTriggered: hideInfo()
+    }
+
     function setInitialState() {
         mainRect.color = "white"
+        text.text = "Waiting to connect..."
+
     }
 
     function setConnectedState() {
         mainRect.color = "black"
+        text.text = ""
+    }
+
+    function setShowInfoState() {
+        mainRect.color = "white"
+        text.text = chat.getNickName() + "\n\n"
+                + qsTr("Connected to\n")
+                + chat.getCurrentClient()
+
+        timer.start()
     }
 }
