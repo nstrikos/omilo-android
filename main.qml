@@ -41,9 +41,26 @@ Window {
 
     Text {
         id: text
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height / 2
         font.family: "Helvetica"
         font.pointSize: 24
+        color: "green"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.WordWrap
+    }
+
+    Text {
+        id: text2
+        anchors.top: text.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height / 2
+        font.family: "Helvetica"
+        font.pointSize: 16
         color: "green"
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -67,12 +84,14 @@ Window {
     function setInitialState() {
         mainRect.color = "white"
         text.text = "Waiting to connect..."
+        text2.text = "If you can't connect:\n1. Enable wifi\n2. Start desktop application"
 
     }
 
     function setConnectedState() {
         mainRect.color = "black"
         text.text = ""
+        text2.text = ""
     }
 
     function setShowInfoState() {
@@ -80,6 +99,7 @@ Window {
         text.text = chat.getNickName() + "\n\n"
                 + qsTr("Connected to\n")
                 + chat.getCurrentClient()
+        text2.text = "";
 
         timer.start()
     }
