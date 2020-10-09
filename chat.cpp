@@ -9,6 +9,9 @@ Chat::Chat()
     connect(&client, SIGNAL(participantLeft(QString)), this, SLOT(participantLeft(QString)));
     connect(&client, SIGNAL(connectedToPeer()), this, SLOT(connectedToPeer()));
     connect(&client, SIGNAL(disconnectedFromPeer()), this, SLOT(disconnectedFromPeer()));
+
+    connect(&m_textToSpeech, &QTextToSpeech::stateChanged,
+            this, &Chat::textToSpeechFinished);
 }
 
 QString Chat::getNickName()
@@ -23,7 +26,14 @@ QString Chat::getCurrentClient()
 
 void Chat::appendMessage(const QString &from, const QString &message)
 {
-    qDebug() << "Message: " << message << " from: " << from;
+    Q_UNUSED(from);
+
+    if (m_textToSpeech.state() == QTextToSpeech::Ready)
+        m_speaking = false;
+    else
+        m_speaking = true;
+
+    m_textToSpeech.say(message);
 }
 
 void Chat::newParticipant(const QString &nick)
@@ -45,4 +55,13 @@ void Chat::connectedToPeer()
 void Chat::disconnectedFromPeer()
 {
     emit disconnected();
+}
+
+void Chat::textToSpeechFinished()
+{
+    if (m_textToSpeech.state() == QTextToSpeech::Ready) {
+        if (m_speaking == false)
+            client.sendMessage("ok");
+    }
+    m_speaking = false;
 }

@@ -1,4 +1,4 @@
-QT += quick
+QT += quick texttospeech
 
 CONFIG += c++11
 
@@ -43,6 +43,13 @@ HEADERS += \
 ANDROID_ABIS = armeabi-v7a
 
 DISTFILES += \
+    ../../../../media/data/nick/projects/omilo-android/android/AndroidManifest.xml \
+    ../../../../media/data/nick/projects/omilo-android/android/build.gradle \
+    ../../../../media/data/nick/projects/omilo-android/android/gradle/wrapper/gradle-wrapper.jar \
+    ../../../../media/data/nick/projects/omilo-android/android/gradle/wrapper/gradle-wrapper.properties \
+    ../../../../media/data/nick/projects/omilo-android/android/gradlew \
+    ../../../../media/data/nick/projects/omilo-android/android/gradlew.bat \
+    ../../../../media/data/nick/projects/omilo-android/android/res/values/libs.xml \
     android/AndroidManifest.xml \
     android/AndroidManifest.xml \
     android/build.gradle \

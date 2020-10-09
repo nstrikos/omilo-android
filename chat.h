@@ -4,6 +4,8 @@
 #include <QObject>
 #include <client.h>
 
+#include <QTextToSpeech>
+
 class Chat : public QObject
 {
     Q_OBJECT
@@ -23,10 +25,14 @@ private slots:
     void participantLeft(const QString &nick);
     void connectedToPeer();
     void disconnectedFromPeer();
+    void textToSpeechFinished();
 
 private:
     Client client;
     QString currentClient;
+
+    QTextToSpeech m_textToSpeech;
+    bool m_speaking = false;
 };
 
 #endif // CHAT_H
