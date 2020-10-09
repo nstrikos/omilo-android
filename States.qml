@@ -13,12 +13,27 @@ Item {
         DSM.State {
             id: initialState
             DSM.SignalTransition {
-                targetState: connectedState
+                targetState: countDownState
                 signal: window.connected
             }
             onEntered: {
                 console.log("initial state")
                 window.setInitialState()
+            }
+        }
+        DSM.State {
+            id: countDownState
+            DSM.SignalTransition {
+                targetState: initialState
+                signal: window.disconnected
+            }
+            DSM.SignalTransition {
+                targetState: connectedState
+                signal: window.countDownFinished
+            }
+            onEntered: {
+                console.log("countdown state")
+                window.setCountDownState()
             }
         }
         DSM.State {

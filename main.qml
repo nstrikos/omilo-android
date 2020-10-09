@@ -10,10 +10,13 @@ Window {
     visible: true
     title: qsTr("Omilo android")
 
+    signal countDownFinished()
     signal connected()
     signal disconnected()
     signal showInfo()
     signal hideInfo()
+
+    property int secondsElapsed: 0
 
     States {
     }
@@ -76,19 +79,47 @@ Window {
     }
 
     Timer {
-        id: timer
+        id:timer
+        interval: 1000
+        repeat: true
+        onTriggered: {
+            secondsElapsed++
+            if (secondsElapsed >= 10) {
+                countDownFinished()
+            } else {
+                mainRect.color = "white"
+                text.text = qsTr("Connected to\n")
+                        + chat.getCurrentClient()
+                text2.text = qsTr("The screen will turn off in ") + (10 - secondsElapsed)
+                timer.repeat = true
+                timer.start()
+            }
+        }
+    }
+
+    Timer {
+        id: timer2
         interval: 10000
         onTriggered: hideInfo()
     }
 
     function setInitialState() {
+        timer.repeat = false
+        timer.stop()
+        secondsElapsed = 0
         mainRect.color = "white"
         text.text = "Waiting to connect..."
         text2.text = "If you can't connect:\n1. Enable wifi\n2. Start desktop application"
+    }
 
+    function setCountDownState() {
+        timer.start()
     }
 
     function setConnectedState() {
+        timer.repeat = false
+        timer.stop()
+        secondsElapsed = 0
         mainRect.color = "black"
         text.text = ""
         text2.text = ""
@@ -101,6 +132,6 @@ Window {
                 + chat.getCurrentClient()
         text2.text = "";
 
-        timer.start()
+        timer2.start()
     }
 }
