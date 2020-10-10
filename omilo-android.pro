@@ -9,15 +9,18 @@ CONFIG += c++11
 SOURCES += \
         chat.cpp \
         client.cpp \
-        connection.cpp \        
+        connection.cpp \
         main.cpp \
         peermanager.cpp \
         server.cpp
 
 android {
     QT += androidextras
-    SOURCES += keepAwakeHelper.cpp
-    HEADERS += keepAwakeHelper.h
+    SOURCES += keepAwakeHelper.cpp \
+               keepAwakeChecker.cpp
+
+    HEADERS += keepAwakeHelper.h \
+               keepAwakeChecker.h \
 }
 
 RESOURCES += qml.qrc

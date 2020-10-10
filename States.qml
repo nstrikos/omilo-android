@@ -19,6 +19,7 @@ Item {
             onEntered: {
                 console.log("initial state")
                 window.setInitialState()
+                keepAwakeChecker.disable()
             }
         }
         DSM.State {
@@ -49,6 +50,7 @@ Item {
             onEntered: {
                 console.log("connected state")
                 window.setConnectedState()
+                keepAwakeChecker.enable()
             }
         }
         DSM.State {
