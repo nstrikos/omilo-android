@@ -4,14 +4,14 @@
 #include <QObject>
 #include <client.h>
 
-#include <QTextToSpeech>
+#include "texttospeech.h"
 
 class Chat : public QObject
 {
     Q_OBJECT
 
 public:
-    Chat();
+    Chat(TextToSpeech *textToSpeech);
     Q_INVOKABLE QString getNickName();
     Q_INVOKABLE QString getCurrentClient();
 
@@ -31,7 +31,7 @@ private:
     Client client;
     QString currentClient;
 
-    QTextToSpeech m_textToSpeech;
+    TextToSpeech *m_textToSpeech;
     bool m_speaking = false;
 };
 

@@ -16,6 +16,8 @@ KeepAwakeHelper::KeepAwakeHelper()
             if ( powerMgr.isValid() )
             {
                 jint levelAndFlags = QAndroidJniObject::getStaticField<jint>("android/os/PowerManager","SCREEN_DIM_WAKE_LOCK");
+                //jint levelAndFlags = QAndroidJniObject::getStaticField<jint>("android/os/PowerManager","PARTIAL_WAKE_LOCK");
+
 
                 QAndroidJniObject tag = QAndroidJniObject::fromString( "My Tag" );
 

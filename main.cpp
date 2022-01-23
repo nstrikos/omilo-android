@@ -5,27 +5,33 @@
 #include "chat.h"
 
 #ifdef Q_OS_ANDROID
-#include "keepAwakeChecker.h"
+#include "keepAwakeHelper.h"
 #endif
+
+//#include "parameters.h"
+#include "texttospeech.h"
 
 int main(int argc, char *argv[])
 {
 
 #ifdef Q_OS_ANDROID
-    KeepAwakeChecker keepAwakeChecker;
+    KeepAwakeHelper keepAwakeHelper;
 #endif
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
 
+    //Parameters parameters;
+    //TextToSpeech textToSpeech(parameters);
+    TextToSpeech textToSpeech;
 
-    Chat chat;
+    Chat chat(&textToSpeech);
 
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("chat", &chat);
-    engine.rootContext()->setContextProperty("keepAwakeChecker", &keepAwakeChecker);
+    engine.rootContext()->setContextProperty("texttospeech", &textToSpeech);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -11,16 +11,16 @@ SOURCES += \
         client.cpp \
         connection.cpp \
         main.cpp \
+        parameters.cpp \
         peermanager.cpp \
-        server.cpp
+        server.cpp \
+        texttospeech.cpp
 
 android {
     QT += androidextras
-    SOURCES += keepAwakeHelper.cpp \
-               keepAwakeChecker.cpp
+    SOURCES += keepAwakeHelper.cpp
 
     HEADERS += keepAwakeHelper.h \
-               keepAwakeChecker.h \
 }
 
 RESOURCES += qml.qrc
@@ -40,10 +40,12 @@ HEADERS += \
     chat.h \
     client.h \
     connection.h \
+    parameters.h \
     peermanager.h \
-    server.h
+    server.h \
+    texttospeech.h
 
-ANDROID_ABIS = armeabi-v7a
+ANDROID_ABIS = armeabi-v7a arm64-v8a x86 x86_64
 
 DISTFILES += \
     ../../../../media/data/nick/projects/omilo-android/android/AndroidManifest.xml \

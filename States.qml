@@ -8,64 +8,78 @@ import QtQml.StateMachine 1.15 as DSM
 Item {
     DSM.StateMachine {
         id: stateMachine
-        initialState: initialState
+        initialState: waitingState
         running: true
         DSM.State {
-            id: initialState
+            id: waitingState
             DSM.SignalTransition {
-                targetState: countDownState
-                signal: window.connected
+                targetState: showInfoState
+                signal: window.connectionEstablished
+            }
+            DSM.SignalTransition {
+                targetState: settingsState
+                signal: window.showSettings
             }
             onEntered: {
                 console.log("initial state")
-                window.setInitialState()
-                keepAwakeChecker.disable()
+                window.waitingStateEntered()
             }
         }
         DSM.State {
-            id: countDownState
+            id: settingsState
             DSM.SignalTransition {
-                targetState: initialState
+                targetState: waitingState
+                signal: window.exitSettings
+                guard: !window.isConnected
+            }
+            DSM.SignalTransition {
+                targetState: showInfoState
+                signal: window.exitSettings
+                guard: window.isConnected
+            }
+            onEntered: {
+                console.log("settings state")
+                window.settingsStateEntered()
+            }
+            onExited: {
+                window.settingsStateExited()
+            }
+        }
+        DSM.State {
+            id: showInfoState
+            DSM.SignalTransition {
+                targetState: waitingState
                 signal: window.disconnected
             }
             DSM.SignalTransition {
                 targetState: connectedState
                 signal: window.countDownFinished
             }
+            DSM.SignalTransition {
+                targetState: settingsState
+                signal: window.showSettings
+            }
             onEntered: {
                 console.log("countdown state")
-                window.setCountDownState()
+                window.showInfoStateEntered()
+            }
+            onExited: {
+                window.showInfoStateExited()
             }
         }
         DSM.State {
             id: connectedState
             DSM.SignalTransition {
-                targetState: initialState
+                targetState: waitingState
                 signal: window.disconnected
             }
             DSM.SignalTransition {
                 targetState: showInfoState
-                signal: window.showInfo
+                signal: window.wake
             }
             onEntered: {
                 console.log("connected state")
-                window.setConnectedState()
-                keepAwakeChecker.enable()
-            }
-        }
-        DSM.State {
-            id: showInfoState
-            DSM.SignalTransition {
-                targetState: connectedState
-                signal: window.hideInfo
-            }
-            DSM.SignalTransition {
-                targetState: initialState
-                signal: window.disconnected
-            }
-            onEntered: {
-                console.log("showinfo state")
-                window.setShowInfoState()
+                window.connectedStateEntered()
             }
         }
     }
