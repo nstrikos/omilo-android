@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>States.qml</file>
         <file>SpeechSettings.qml</file>
+        <file>MainRect.qml</file>
     </qresource>
 </RCC>

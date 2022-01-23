@@ -15,12 +15,16 @@ TextToSpeech::TextToSpeech()
     m_speech->setPitch(m_pitch);
 
     connect(m_speech, &QTextToSpeech::stateChanged, this, &TextToSpeech::stateChanged);
+
+    qDebug() << "TextToSpeech initialized";
 }
 
 TextToSpeech::~TextToSpeech()
 {
     if (m_speech != nullptr)
         delete m_speech;
+
+    qDebug() << "TextToSpeech deleted";
 }
 
 double TextToSpeech::volume() const

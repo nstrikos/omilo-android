@@ -8,9 +8,6 @@
 #include "keepAwakeHelper.h"
 #endif
 
-//#include "parameters.h"
-#include "texttospeech.h"
-
 int main(int argc, char *argv[])
 {
 
@@ -22,11 +19,9 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    //Parameters parameters;
-    //TextToSpeech textToSpeech(parameters);
     TextToSpeech textToSpeech;
 
-    Chat chat(&textToSpeech);
+    Chat chat(textToSpeech);
 
     QQmlApplicationEngine engine;
 

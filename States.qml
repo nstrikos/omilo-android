@@ -10,6 +10,7 @@ Item {
         id: stateMachine
         initialState: waitingState
         running: true
+
         DSM.State {
             id: waitingState
             DSM.SignalTransition {
@@ -20,11 +21,9 @@ Item {
                 targetState: settingsState
                 signal: window.showSettings
             }
-            onEntered: {
-                console.log("initial state")
-                window.waitingStateEntered()
-            }
+            onEntered: window.waitingStateEntered()
         }
+
         DSM.State {
             id: settingsState
             DSM.SignalTransition {
@@ -37,14 +36,10 @@ Item {
                 signal: window.exitSettings
                 guard: window.isConnected
             }
-            onEntered: {
-                console.log("settings state")
-                window.settingsStateEntered()
-            }
-            onExited: {
-                window.settingsStateExited()
-            }
+            onEntered: window.settingsStateEntered()
+            onExited: window.settingsStateExited()
         }
+
         DSM.State {
             id: showInfoState
             DSM.SignalTransition {
@@ -59,14 +54,10 @@ Item {
                 targetState: settingsState
                 signal: window.showSettings
             }
-            onEntered: {
-                console.log("countdown state")
-                window.showInfoStateEntered()
-            }
-            onExited: {
-                window.showInfoStateExited()
-            }
+            onEntered: window.showInfoStateEntered()
+            onExited: window.showInfoStateExited()
         }
+
         DSM.State {
             id: connectedState
             DSM.SignalTransition {
@@ -77,10 +68,7 @@ Item {
                 targetState: showInfoState
                 signal: window.wake
             }
-            onEntered: {
-                console.log("connected state")
-                window.connectedStateEntered()
-            }
+            onEntered: window.connectedStateEntered()
         }
     }
 }

@@ -11,7 +11,6 @@ SOURCES += \
         client.cpp \
         connection.cpp \
         main.cpp \
-        parameters.cpp \
         peermanager.cpp \
         server.cpp \
         texttospeech.cpp
@@ -40,7 +39,6 @@ HEADERS += \
     chat.h \
     client.h \
     connection.h \
-    parameters.h \
     peermanager.h \
     server.h \
     texttospeech.h
