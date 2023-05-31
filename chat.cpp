@@ -15,12 +15,19 @@ void Chat::appendMessage(const QString &from, const QString &message)
 {
     Q_UNUSED(from);
 
-    if (m_textToSpeech.state() == QTextToSpeech::Ready)
-        m_speaking = false;
-    else
-        m_speaking = true;
+    if (message == "command-stop") {
+        m_textToSpeech.stop();
+    } else if (message.startsWith("command-text:")) {
+        QString cmd = "command-text:";
+        int length = cmd.length();
+        QString text = message.right(message.length() - length);
+        if (m_textToSpeech.state() == QTextToSpeech::Ready)
+            m_speaking = false;
+        else
+            m_speaking = true;
 
-    m_textToSpeech.speak(message);
+        m_textToSpeech.speak(text);
+    }
 }
 
 void Chat::connectedToPeer()
